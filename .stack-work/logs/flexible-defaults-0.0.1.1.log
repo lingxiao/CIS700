@@ -1,0 +1,30 @@
+Configuring flexible-defaults-0.0.1.1...
+Building flexible-defaults-0.0.1.1...
+Preprocessing library flexible-defaults-0.0.1.1...
+[1 of 3] Compiling Language.Haskell.TH.FlexibleDefaults.Solve ( src/Language/Haskell/TH/FlexibleDefaults/Solve.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Language/Haskell/TH/FlexibleDefaults/Solve.o )
+
+src/Language/Haskell/TH/FlexibleDefaults/Solve.hs:13:1: Warning:
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+[2 of 3] Compiling Language.Haskell.TH.FlexibleDefaults.DSL ( src/Language/Haskell/TH/FlexibleDefaults/DSL.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Language/Haskell/TH/FlexibleDefaults/DSL.o )
+
+src/Language/Haskell/TH/FlexibleDefaults/DSL.hs:4:1: Warning:
+    The import of ‘Control.Applicative’ is redundant
+      except perhaps to import instances from ‘Control.Applicative’
+    To import instances alone, use: import Control.Applicative()
+
+src/Language/Haskell/TH/FlexibleDefaults/DSL.hs:9:1: Warning:
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+[3 of 3] Compiling Language.Haskell.TH.FlexibleDefaults ( src/Language/Haskell/TH/FlexibleDefaults.hs, .stack-work/dist/x86_64-osx/Cabal-1.22.4.0/build/Language/Haskell/TH/FlexibleDefaults.o )
+
+src/Language/Haskell/TH/FlexibleDefaults.hs:27:1: Warning:
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+In-place registering flexible-defaults-0.0.1.1...
+Installing library in
+/Users/lingxiao/.stack/snapshots/x86_64-osx/lts-3.18/7.10.2/lib/x86_64-osx-ghc-7.10.2/flexible-defaults-0.0.1.1-4rrpWKP10nvDTxyfzGWBDd
+Registering flexible-defaults-0.0.1.1...

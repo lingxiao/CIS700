@@ -1,0 +1,29 @@
+% -----------------------------------------------------------------------------------
+% Section   : 
+% -----------------------------------------------------------------------------------
+
+
+
+\section*{Abstract}
+
+In this paper we study the Count-min Sketch problem and explore the feasibility of impelementing it in the programming language Haskell. We benchmark its \textit{time-complexity} against naive methods.\newline
+
+
+\section*{Introduction}
+
+Modern applications now must handle massive amount of data. In this setting, many existing data structures that were suitable for main memory no longer suffice; therefore we are motivated to find new  data structures that are relatively small, even sub-linear in the size of the input. Furthermore, it often suffices to provide approximate responses to various queries. 
+These so called “sketches”  approximate massive data sets. We implement one such data structure called the Count-Min Sketch that has found wide applications from machine learning to distributed computing, just to name a few. \newline
+
+First we introduce the most common problem in modern data processing: count tracking. In this problem, there are a large number of items, and an associated frequency for each item which changes over time. The query specifies an
+item and the response to the query is the frequency of the item. Here is an example.
+Suppose a high traffic website needs to track statistics on the queries used
+to search the site. \newline
+
+This problem can be solved exactly using traditional data structures: ie a hash table [4], and update and Estimate involve standard hash methods. However, the amount of memory used by the data structure can become very large over
+time as more items are added. Because its size is large, accessing such a data structure becomes slow. Practically speaking, as the table grows it must be periodically resized, this affects real-time processing. Finally, in
+distributed applications, if the entire frequency distribution has to be communicated, this may be a prohibitive overhead. \newline
+
+But note in this setting we can generally tolerate some imprecision, that is we may tradeoff precision for an algorithm with lower time or space complexity. For instance, in presenting statistics on customer buying patterns, an uncertainty of one percent or less is not considered significant. Such sketch data structures can accurately summarize arbitrary data distributions with a small and fixed memory footprint that can often fit within a cache, thus leading to fast processing of updates and quick communication across sites.
+
+
+

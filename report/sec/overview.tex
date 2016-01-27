@@ -1,0 +1,91 @@
+% -----------------------------------------------------------------------------------
+% Section   : 
+% -----------------------------------------------------------------------------------
+
+
+
+\section*{Data Structure}
+
+
+First we describe the setting and data structure. We have a stream of items $\set{i_1, i_2, ...}$ where each $i$ comes from some finite universe $\pmb{I} = \set{1,..,i,..n}$, and we are interested in the approximate frequence of each $i$. The Count-Min Sketch algorithms $Init$ialize a fixed array of counters, of width $w$ and depth $d$, where the counters are initialized to all zeros. Each row $j$ of counters is associated with a different pairwise independent hash function $\mathcal{H}_j : i \send \set{1,..,w}$ mapping items $i$ uniformly onto the column index. Now the hash functions do not need to be particularly strong a la cryptographic hash functions. In our setting where items are simply integers, we have:
+	\[
+		\mathcal{H}_j = a_j \times i + b_j \quad mod \quad p \quad mod \quad w
+	\]
+
+where p is some prime number far larger than $n$, say $p = 2^n - 1$, and $a_j$ and $b_j$ are chosen uniformly from $(1,p)$. But note each $\mathcal{H}_j$ must be different, otherwise there is no benefit from the repetition.\newline
+
+\section*{Functions over the data structure}
+
+Once the counters or sketch and hash functions are initalized, we $Update$ the sketch as items $i$ come in from the stream. Meanwhile we may $Estimate$ the frequency of any $i$ using our counters and hash table. Consider the pseudocode below. \newline
+
+
+\begin{algorithm}
+\caption{Init(w,d,p)}\label{euclid}
+\begin{algorithmic}[1]
+	\State $C[1,1]...C[d,w] \gets 0$
+	\For {$j \gets 1 \textit{ to d}$}
+		\State \textit{pick $a_j,b_j$ uniformly from $[1..p]$}
+	\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{Update(i)}\label{euclid}
+\begin{algorithmic}[1]
+	\For {$j \gets 1 \textit{ to d}$}
+		\State $h_j(i) = (a_j \times i + b_j) \quad mod \quad p \quad mod \quad w$
+		\State $C[j,h_j(i)]  \leftarrow C[j,h_j(i)] + 1$
+	\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}
+\caption{Estimate(i)}\label{euclid}
+\begin{algorithmic}[1]
+	\State $e \gets \infty$
+	\For {$j \gets 1 \textit{ to d}$}
+		\State $h_j(i) = (a_j \times i + b_j) \quad mod \quad p \quad mod \quad w$
+		\State $e \leftarrow min(e,C[j,h_j(i)]$
+	\EndFor
+	\State $return \quad e$
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

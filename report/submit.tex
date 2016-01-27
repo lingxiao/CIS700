@@ -1,0 +1,139 @@
+% -----------------------------------------------------------------------------------
+% -----------------------------------------------------------------------------------
+% Document   : Report
+% Author     : Xiao Ling	
+% Assignment : 3.1,3.2,3.5,3.7
+% -----------------------------------------------------------------------------------
+% -----------------------------------------------------------------------------------
+
+\documentclass[letterpaper]{article}
+\title{CIS 700 \\ Final Report}
+\author{Xiao Ling}
+\date{December 20th, 2015}
+
+
+\usepackage{bbm}
+\usepackage{pifont}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{xparse}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage[normalem]{ulem}
+\usepackage[fleqn]{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\setlength{\parindent}{0pt}
+
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+\newtheorem{eg}{Example}[section]
+\theoremstyle{statement}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem*{given}{Given}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{defn}{Definition}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{atmProp}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newcommand{\poly}{\text{poly}}
+% Pr{event}
+\DeclareDocumentCommand{\Pr}{s m}{
+  \operatorname{\pmb{Pr}}
+  \IfBooleanTF{#1}
+    {#2}
+    {\left\{#2\right\}}
+}
+% E[event]
+\DeclareDocumentCommand{\E}{s m}{
+  \operatorname{\pmb{E}}
+  \IfBooleanTF{#1}
+    {#2}
+    {\left[#2\right]}
+}
+
+% Big set brackets
+\DeclareDocumentCommand{\bset}{s m}{
+  \IfBooleanTF{#1}
+    {#2}
+    {\Big\{#2\Big\}}
+}
+
+% big set brackets
+\DeclareDocumentCommand{\mset}{s m}{
+  \IfBooleanTF{#1}
+    {#2}
+    {\big\{#2\big\}}
+}
+
+% adaptive set brackets
+\DeclareDocumentCommand{\set}{s m}{
+  \IfBooleanTF{#1}
+    {#2}
+    {\left\{#2\right\}}
+}
+
+% angle brackets
+\DeclareDocumentCommand{\angle}{s m}{
+  \IfBooleanTF{#1}
+    {#2}
+    {\langle#2\rangle}
+}
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\bbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}    % long overhead bar
+\newcommand{\Bb}{\mathbb}     % blackboard font
+\newcommand{\Sc}{\mathcal}    % mathcal is Script
+
+
+% Aliases
+\def\union{\cup}              % union
+\def\intersect{\cap}          % intersection
+\def\sat{\models}             % |=
+\def\AND{\wedge}              % AND
+\def\OR{\vee}                 % OR
+\def\imply{\Rightarrow}       % Implies
+\def\implies{~~\Rightarrow~~} % Implies with space
+\def\iff{\Leftrightarrow}     % if and only if
+\def\send{\rightarrow}        % ->
+\def\eps{\epsilon}            % epsilon shorthand
+\def\sand{\quad and \quad}    % space and
+
+% Computational learning theory shortcuts
+\def\h{\pmb{h}}
+\def\H{\mathcal{H}}
+\def\c{\pmb{c}}
+\def\C{\mathcal C}
+
+\def\vcd{\text{VC dimension}}
+
+% Font type
+\usepackage{palatino} 
+\usepackage{euler} 
+
+\begin{document}
+
+% \maketitle
+\input{sec/intro}  
+\input{sec/overview}  
+\input{sec/proof}  
+\input{sec/impl}  
+
+
+
+
+\end{document}

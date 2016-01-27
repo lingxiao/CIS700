@@ -1,0 +1,133 @@
+so I'd have some big nested record Record a b = R a b
+Cale
+At the same time, this gives you an opportunity to control how state gets updated -- maybe you just want the user to set it freely, but sometimes not every state is really valid and you'd like to make sure they build it up in a sane way.
+cleamoon has joined (~cleamoon@c213-89-124-61.bredband.comhem.se)
+lingxiao
+and putFoo and putBar operate on it?
+Cale
+It can be nested or flat
+suppi has left IRC (Quit: Leaving)
+lingxiao
+or but the poin is to declare such a thing?
+baweaver has joined (~baweaver@50-80-249-200.client.mchsi.com)
+lingxiao
+point*
+Cale
+Well, yeah, that'll be in the instance of your new type class.
+bipvanwinkle has left IRC (Ping timeout: 265 seconds)
+Boney has joined (~paul@ppp118-209-73-204.lns20.mel4.internode.on.net)
+Cale
+For the monad type you construct (possibly using StateT)
+rvxi
+hpc programming languages and software development is one of the few fields where people seem determined to leave things to subjectivity
+geekosaur
+vektor, it might be less tedious than the other way, which requires deling into ghc-api
+geekosaur
+*delving
+lingxiao
+im hesitant to declare new typeclass because it seems like "overdesing"
+Cale
+Well, this is sort of an intermediate step
+lingxiao
+wait you're saying declare a new type class  right?
+Cale
+yes
+OB1TO has left IRC ()
+Cale
+But you're right, it's questionable whether having that type class in itself is a bit much
+lingxiao
+see another issue here is that once i compute the parameters ... they really should be read only
+rvxi
+hpc maybe because there's such a high cost to learning, there's an inherent conflict of interest
+lingxiao
+yeah my attitude w/ typeclasses is that if I can't find it in a paper somewhere it's prob not worth it :D
+goodboy has joined (~goodboy@CPE78cd8ecdde60-CM78cd8ecdde5d.cpe.net.cable.rogers.com)
+shirt
+data IntList = IntListNull | IntList Int IntList
+hpc
+or a blindness from having invested enough time that it becomes easy
+shirt
+How can i make IntList an instance of Traversable?
+szgyg has left IRC (Ping timeout: 265 seconds)
+rvxi
+hpc the other day, i was talking to someone who couldn't understand how matlab could be a bad language when "you get so much done"
+lingxiao
+but I dont know how to do what you had initally suggeested ... everyting will be lifted into conduitM
+Cale
+lingxiao: So, you can do things at the type level to try to ensure client code can't even *try* to set something more than once, but that takes you out of the realm of ordinary monads into something like indexed monads.
+lingxiao
+so i wnt something like     source ~> initPram ~> initStore ~> update
+archmonk has joined (~archmonk@c-50-174-16-226.hsd1.ca.comcast.net)
+lingxiao
+indexed monads heh maybe another day
+Cale
+However, as an intermediate level of safety, defining this type class of operations will let you do runtime checks
+vektor
+geekosaur: I know :D Then again, there's easy to use tools like haskell-src-exts. I've already thought, maybe the output of ghci is in a format that Language.Haskell.Exts.Parser can parse.
+hpc
+rvxi: i have had a similar revelation about spreadsheets (which makes me want to retry learning frp but that's another story)
+Cale
+Because you get to define the setters to check whether the thing is already set, and perhaps throw an exception or something.
+u_ has left IRC (Read error: Connection reset by peer)
+hpc
+rvxi: where vlookups and pivot tables and google docs' embedded queries are pretty objectively awful
+hpc
+but you can do an amazing amount of computation and representation of data
+verement has left IRC (Read error: Connection reset by peer)
+hpc
+and it's not hard when you're good at it, but there's many pitfalls
+emilypi has left IRC (Remote host closed the connection)
+Cale
+But yeah, then the next step is to decide whether you really need the type class, or whether you might be better off just using a record data type with fields for each of the operations of what would have been your class.
+nomeata has left IRC (Quit: Client exiting)
+tnecniv has left IRC (Quit: My Mac has gone to sleep. ZZZzzz…)
+pacak has joined (~pacak@175.156.145.194)
+rvxi
+hpc you can have a short OODA loop you can get with repl/spreadsheet workflows. haskell should have  a better R Shiny  type of solution to bury that type of competition.
+hpc
+yeah
+hpc is also a fan of R
+rvxi
+hpc like http://david-peter.de/articles/flare/
+Rizy has left IRC (Quit: Rizy)
+hpc
+(but still hates matlab)
+Cale
+This can be cool if you're ultimately just going to implement the thing over IO, because you can just implement the getters and setters in terms of IORef or something then
+Cale
+But you still get the nice abstraction where you have types like:
+Rizy has joined (~Rizy@125.161.200.92)
+verement has joined (~anonymous@cpe-24-94-9-156.san.res.rr.com)
+baweaver has left IRC (Ping timeout: 265 seconds)
+Cale
+update :: Some m -> Streaming Event m ()   -- where Some is now a record type rather than a class.
+Cale
+Maybe it should be:
+Noldorin has joined (~noldorin@unaffiliated/noldorin)
+Cale
+update :: (Monad m) => Some m -> Streaming Event m ()
+arw has left IRC (Ping timeout: 246 seconds)
+Cale
+but yeah, hopefully it makes sense what I'm saying :)
+cleamoon has left IRC (Read error: Connection reset by peer)
+rvxi
+hpc R is still >> matlab (although this person thought matlab was superior due to performance). i'm starting to get weary of the dynamic programming bugs in R code. R can seem much worse than it is because it attracts really bad programmers.
+hpc
+rvxi: i would be more generous, it attracts non-programmers
+Cale
+So, you'd have something like  data Some m = Some { getFoo :: m Foo, setFoo :: Foo -> m (), ... }
+edwinvdgraaf has left IRC (Read error: Connection reset by peer)
+hpc
+rvxi: statisticians are the target audience for R in the same way secretaries are the target audience for excel
+cleamoon has joined (~cleamoon@c213-89-124-61.bredband.comhem.se)
+rvxi
+hpc i'd like to swap in haskell for R, but the lack of numerics and scientific computing ecoystem holds me back
+edwinvdgraaf has joined (~edwinvdgr@095-096-024-193.static.chello.nl)
+mizu_no_oto has joined (~textual@c-73-219-2-228.hsd1.ma.comcast.net)
+mizu_no_oto has left IRC (Excess Flood)
+hpc
+yeah
+hpc
+ive been converting a spreadsheet to sql and using it as an excuse to finally use views and procedures
+Cale
+and then you can write an IO action which builds a Some IO record by making some IORefs, or you can write a more pure one which uses StateT

@@ -1,0 +1,71 @@
+% -----------------------------------------------------------------------------------
+% Section   : 
+% -----------------------------------------------------------------------------------
+
+\def\H{\mathcal{H}}              
+\def\Z{\pmb{Z}}       
+\def\X{\pmb{X}}       
+\def\ci{c_{i,\H_i(x)}}       
+
+
+
+\section*{Proof}
+
+
+Intuitively, the the use of different hash functions ensures that 
+actually the chance of getting an estimate that is far from some average is small. Now we make this precise. Since for every $x$ the value $\ci \ge f_x$ we have:
+	\[
+		f_x \le \widetilde{f_x} = min(c_{1,\H_1(x),...c_{d,\H_d(x)}})
+	\]
+
+
+ We show that if $w = \frac{2}{\eps}$ and $d = \log_2 \frac{1}{\delta}$ then:
+	\[
+		\Pr { f_x \le \widetilde{f_x} \le f_x + \eps m } \ge 1 - \delta
+	\]
+
+Let's define random variables $\Z_1,\ldots,\Z_d$ so that $\ci = f_x + \Z_i$, where
+	\[
+		\Z_i = \sum_{y \ne x, \H_i(y) = \H_i(x)} f_y,
+	\]
+
+define $\pmb{X}_{i,h} = 1$ if $\H_i(y) = \H_i(x)$ and $0$ otherwise:
+
+	\[
+		\Z_i = \sum_{y \ne x} f_y \pmb{X}_{i,y},
+	\]
+
+Since the $\H$'s are pairwise independent, we have:
+	\[
+		\E{\Z_i} = \sum_{y\ne x} f_y \E{ X_{i,y}} = \sum_{y\ne x} Pr{ \H_i(x) = \H_i(x)} \le \frac{m}{w},
+	\]
+
+by Markov we have:
+	\[
+		\Pr{ \Z_i \ge \eps m} \le \frac{1}{w \eps} = \frac{1}{2}..
+	\]	
+
+
+Since all $Z_i$ are independent, we know:
+
+	\[
+		\Pr{Z_i \ge \eps m \quad \forall \quad 1 \le i \le d} \le \bigg(\frac{1}{d}\bigg)^d = \delta.
+	\]
+
+Now with probability $1-\delta$ there is some $j$ so that $Z_j \le \eps m$:
+	
+	\[
+		\widetilde{f_x} = min (f_x + \Z_1, ..., f_x + Z_d) \le f_x + \eps m.
+	\]
+
+Hence CountMin esitmates $x$ up to $+/- \eps m$ with space $O \bigg(  \frac{log m log \frac{1}{\delta}}{\eps} \bigg)$.
+
+
+
+
+
+
+
+
+
+
